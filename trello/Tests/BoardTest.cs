@@ -72,7 +72,7 @@ namespace trello
             }
             catch (JsonReaderException)
             {
-                // no data to be deleted
+                // no data to be deserialized
             }
         }
 

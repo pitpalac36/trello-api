@@ -39,9 +39,8 @@ namespace trello
         {
             get
             {
-                yield return new object[] { new Board { Name = Faker.Name.FullName(), Desc = Faker.Lorem.Sentence(), Closed = false }, System.Net.HttpStatusCode.OK };
-                yield return new object[] { new Board { Name = Faker.Name.FullName(), Desc = Faker.Lorem.Sentence(), Closed = false }, System.Net.HttpStatusCode.OK };
-                yield return new object[] { new Board { Name = Faker.Name.FullName(), Desc = Faker.Lorem.Sentence(), Closed = false }, System.Net.HttpStatusCode.OK };
+                for (int i = 0; i < 3; i++)
+                    yield return new object[] { new Board { Name = Faker.Name.FullName(), Desc = Faker.Lorem.Sentence(), Closed = false }, System.Net.HttpStatusCode.OK };
             }
         }
 
@@ -89,6 +88,19 @@ namespace trello
             var response = client.Execute(request);
             var content = JsonConvert.DeserializeObject<Board>(response.Content);
             content.Name.Should().Be(dto.Name);
+        }
+
+        [TestMethod]
+        public void DeleteBoardByIdTest()
+        {
+            var client = new RestClient(Constants.BaseUrl);
+            var randBoard = _currentBoards[Faker.RandomNumber.Next(0, _currentBoards.Count)];
+            var finalUrl = string.Format(Constants.DeleteBoard, randBoard.Id);
+
+            var request = new RestRequest(finalUrl, Method.DELETE);
+
+            var response = client.Execute(request);
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
         }
 
         [ClassCleanup]

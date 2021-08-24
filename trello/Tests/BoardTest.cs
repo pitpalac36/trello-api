@@ -2,7 +2,6 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
 using System.Collections.Generic;
 using trello.Helpers;
 using trello.Helpers.models;
@@ -12,7 +11,7 @@ namespace trello
     [TestClass]
     public class BoardTest
     {
-        public static IList<Board> _currentBoards = new List<Board>();
+        public volatile static IList<Board> _currentBoards = new List<Board>();
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -27,6 +26,13 @@ namespace trello
                 var deleteBoard = string.Format(Constants.DeleteBoard, each.Id);
                 client.Execute(new RestRequest(deleteBoard, Method.DELETE));
             }
+            var toBeAdded = new Board().MakeFake();
+            var createUrl = string.Format(Constants.CreateBoard, toBeAdded.Name, toBeAdded.Desc, toBeAdded.Closed);
+            request = new RestRequest(createUrl, Method.POST);
+            request.AddJsonBody(toBeAdded);
+
+            response = client.Execute(request);
+            _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content)); // because i need id
         }
 
         public static IEnumerable<object[]> Data
@@ -74,6 +80,21 @@ namespace trello
             {
                 // no data to be deserialized
             }
+        }
+
+        [TestMethod]
+        public void UpdateBoardTest()
+        {
+            var client = new RestClient(Constants.BaseUrl);
+            var dto = new UpdateBoardDTO { Id = _currentBoards[0].Id, Name = Faker.Name.FullName() };
+            var finalUrl = string.Format(Constants.UpdateBoard, dto.Id, dto.Name);
+
+            var request = new RestRequest(finalUrl, Method.PUT);
+            request.AddJsonBody(dto);
+
+            var response = client.Execute(request);
+            var content = JsonConvert.DeserializeObject<Board>(response.Content);
+            content.Name.Should().Be(dto.Name);
         }
 
         [ClassCleanup]

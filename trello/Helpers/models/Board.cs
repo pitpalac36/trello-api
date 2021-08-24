@@ -8,6 +8,14 @@ namespace trello.Helpers.models
         public string Desc { get; set; }
         public bool Closed { get; set; }
 
+        public Board MakeFake()
+        {
+            Name = Faker.Name.FullName();
+            Desc = Faker.Lorem.Sentence();
+            Closed = Faker.Boolean.Random();
+            return this;
+        }
+
         public override bool Equals(object other)
         {
             return Name == ((Board)other).Name

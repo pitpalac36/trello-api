@@ -67,19 +67,13 @@ namespace trello
         public void GetBoardsTest()
         {
             var client = new RestClient(Constants.BaseUrl);
-            var request = new RestRequest(Constants.GetBoards, Method.POST);
+            var request = new RestRequest(Constants.GetBoards, Method.GET);
 
             var response = client.Execute(request);
-            try
-            {
-                var content = JsonConvert.DeserializeObject<Board[]>(response.Content);
-                content.Length.Should().Be(_currentBoards.Count);
-                content.Should().BeEquivalentTo(_currentBoards);
-            }
-            catch (JsonReaderException)
-            {
-                // no data to be deserialized
-            }
+            var content = JsonConvert.DeserializeObject<Board[]>(response.Content);
+
+            content.Length.Should().Be(_currentBoards.Count);
+            content.Should().BeEquivalentTo(_currentBoards);
         }
 
         [TestMethod]

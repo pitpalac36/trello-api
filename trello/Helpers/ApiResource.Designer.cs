@@ -70,7 +70,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /1/boards?name={0}&amp;desc={1}&amp;closed={2}&amp;key=ccb12ad790633da2de89ccc4e70cd59e&amp;token=dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb.
+        ///   Looks up a localized string similar to /1/boards?name={0}&amp;desc={1}&amp;closed={2}&amp;key={3}&amp;token={4}.
         /// </summary>
         internal static string CreateBoard {
             get {
@@ -79,7 +79,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /1/boards/{0}/lists?key=ccb12ad790633da2de89ccc4e70cd59e&amp;token=dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb&amp;name={1}.
+        ///   Looks up a localized string similar to /1/boards/{0}/lists?key={1}&amp;token={2}&amp;name={3}.
         /// </summary>
         internal static string CreateList {
             get {
@@ -88,7 +88,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /1/boards/{0}?key=ccb12ad790633da2de89ccc4e70cd59e&amp;token=dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb.
+        ///   Looks up a localized string similar to /1/boards/{0}?key={1}&amp;token={2}.
         /// </summary>
         internal static string DeleteBoard {
             get {
@@ -97,7 +97,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /1/members/lauradunca2/boards?key=ccb12ad790633da2de89ccc4e70cd59e&amp;token=dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb.
+        ///   Looks up a localized string similar to /1/members/{0}/boards?key={1}&amp;token={2}.
         /// </summary>
         internal static string GetBoards {
             get {
@@ -106,7 +106,25 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /1/boards/{0}?key=ccb12ad790633da2de89ccc4e70cd59e&amp;token=dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb&amp;name={1}.
+        ///   Looks up a localized string similar to ccb12ad790633da2de89ccc4e70cd59e.
+        /// </summary>
+        internal static string Key {
+            get {
+                return ResourceManager.GetString("Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb.
+        /// </summary>
+        internal static string Token {
+            get {
+                return ResourceManager.GetString("Token", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /1/boards/{0}?key={1}&amp;token={2}&amp;name={3}.
         /// </summary>
         internal static string UpdateBoard {
             get {

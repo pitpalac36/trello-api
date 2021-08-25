@@ -59,7 +59,7 @@ namespace trello
             response.StatusCode.Should().Be(status);
             content.Should().Be(board);
 
-            _currentBoards.Add(board);
+            _currentBoards.Add(content);
         }
 
         [TestMethod]
@@ -88,19 +88,20 @@ namespace trello
             var response = client.Execute(request);
             var content = JsonConvert.DeserializeObject<Board>(response.Content);
             content.Name.Should().Be(dto.Name);
+            _currentBoards[0].Name = dto.Name;
         }
 
         [TestMethod]
         public void DeleteBoardByIdTest()
         {
             var client = new RestClient(Constants.BaseUrl);
-            var randBoard = _currentBoards[Faker.RandomNumber.Next(0, _currentBoards.Count)];
-            var finalUrl = string.Format(Constants.DeleteBoard, randBoard.Id);
+            var finalUrl = string.Format(Constants.DeleteBoard, _currentBoards[0].Id);
 
             var request = new RestRequest(finalUrl, Method.DELETE);
 
             var response = client.Execute(request);
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            _currentBoards.Remove(_currentBoards[0]);
         }
 
         [ClassCleanup]

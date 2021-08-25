@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
 using trello.Helpers;
+using trello.Helpers.clients;
 using trello.Helpers.models;
 
 namespace trello
@@ -17,10 +18,8 @@ namespace trello
         public static void ClassInitialize(TestContext context)
         {
             var client = new RestClient(Constants.BaseUrl);
-
-            Client.DeleteBoards(client);
-
-            var response = Client.CreateBoard(client);
+            BoardClient.DeleteBoards(client);
+            var response = BoardClient.CreateBoard(client);
             _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content)); // because i need id
         }
 
@@ -37,11 +36,7 @@ namespace trello
         public void CreateBoardTest(Board board, System.Net.HttpStatusCode status)
         {
             var client = new RestClient(Constants.BaseUrl);
-            var finalUrl = string.Format(Constants.CreateBoard, board.Name, board.Desc, board.Closed);
-            var request = new RestRequest(finalUrl, Method.POST);
-            request.AddJsonBody(board);
-
-            var response = client.Execute(request);
+            var response = BoardClient.CreateBoard(client, board);
             var content = JsonConvert.DeserializeObject<Board>(response.Content);
 
             response.StatusCode.Should().Be(status);
@@ -55,10 +50,8 @@ namespace trello
         {
             var client = new RestClient(Constants.BaseUrl);
             var name = Faker.Name.FullName();
-            var finalUrl = string.Format(Constants.CreateList, _currentBoards[0].Id, name);
-            var request = new RestRequest(finalUrl, Method.POST);
 
-            var response = client.Execute(request);
+            var response = ListClient.CreateList(client, _currentBoards[0].Id, name);
             var content = JsonConvert.DeserializeObject<BoardList>(response.Content);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
@@ -70,9 +63,7 @@ namespace trello
         public void GetBoardsTest()
         {
             var client = new RestClient(Constants.BaseUrl);
-            var request = new RestRequest(Constants.GetBoards, Method.GET);
-
-            var response = client.Execute(request);
+            var response = BoardClient.GetBoards(client);
             var content = JsonConvert.DeserializeObject<Board[]>(response.Content);
 
             content.Length.Should().Be(_currentBoards.Count);
@@ -83,15 +74,12 @@ namespace trello
         public void UpdateBoardTest()
         {
             var client = new RestClient(Constants.BaseUrl);
-            var dto = new UpdateBoardDTO { Id = _currentBoards[0].Id, Name = Faker.Name.FullName() };
-            var finalUrl = string.Format(Constants.UpdateBoard, dto.Id, dto.Name);
-
-            var request = new RestRequest(finalUrl, Method.PUT);
-            request.AddJsonBody(dto);
-
-            var response = client.Execute(request);
+            var dto = new UpdateBoard { Id = _currentBoards[0].Id, Name = Faker.Name.FullName() };
+            var response = BoardClient.UpdateBoard(client, dto);
             var content = JsonConvert.DeserializeObject<Board>(response.Content);
+
             content.Name.Should().Be(dto.Name);
+
             _currentBoards[0].Name = dto.Name;
         }
 
@@ -99,12 +87,10 @@ namespace trello
         public void DeleteBoardByIdTest()
         {
             var client = new RestClient(Constants.BaseUrl);
-            var finalUrl = string.Format(Constants.DeleteBoard, _currentBoards[0].Id);
+            var response = BoardClient.DeleteBoard(client, _currentBoards[0].Id);
 
-            var request = new RestRequest(finalUrl, Method.DELETE);
-
-            var response = client.Execute(request);
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+
             _currentBoards.Remove(_currentBoards[0]);
         }
 
@@ -112,7 +98,7 @@ namespace trello
         public static void ClassCleanup()
         {
             var client = new RestClient(Constants.BaseUrl);
-            Client.DeleteBoards(client);
+            BoardClient.DeleteBoards(client);
         }
     }
 }

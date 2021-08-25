@@ -63,6 +63,22 @@ namespace trello
         }
 
         [TestMethod]
+        public void CreateListOnBoardTest()
+        {
+            var client = new RestClient(Constants.BaseUrl);
+            var name = Faker.Name.FullName();
+            var finalUrl = string.Format(Constants.CreateList, _currentBoards[0].Id, name);
+            var request = new RestRequest(finalUrl, Method.POST);
+
+            var response = client.Execute(request);
+            var content = JsonConvert.DeserializeObject<BoardList>(response.Content);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            content.IdBoard.Should().BeEquivalentTo(_currentBoards[0].Id);
+            content.Name.Should().BeEquivalentTo(name);
+        }
+
+        [TestMethod]
         public void GetBoardsTest()
         {
             var client = new RestClient(Constants.BaseUrl);

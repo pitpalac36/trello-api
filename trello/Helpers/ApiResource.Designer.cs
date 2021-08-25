@@ -79,6 +79,15 @@ namespace trello.Helpers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /1/boards/{0}/lists?key=ccb12ad790633da2de89ccc4e70cd59e&amp;token=dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb&amp;name={1}.
+        /// </summary>
+        internal static string CreateList {
+            get {
+                return ResourceManager.GetString("CreateList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /1/boards/{0}?key=ccb12ad790633da2de89ccc4e70cd59e&amp;token=dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb.
         /// </summary>
         internal static string DeleteBoard {

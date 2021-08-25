@@ -9,5 +9,6 @@ namespace trello.Helpers
         public static string Username = ApiResource.Username;
         public static string DeleteBoard = ApiResource.DeleteBoard;
         public static string UpdateBoard = ApiResource.UpdateBoard;
+        public static string CreateList = ApiResource.CreateList;
     }
 }

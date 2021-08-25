@@ -17,21 +17,10 @@ namespace trello
         public static void ClassInitialize(TestContext context)
         {
             var client = new RestClient(Constants.BaseUrl);
-            var request = new RestRequest(Constants.GetBoards, Method.GET);
 
-            var response = client.Execute(request);
-            var content = JsonConvert.DeserializeObject<Board[]>(response.Content);
-            foreach (var each in content)
-            {
-                var deleteBoard = string.Format(Constants.DeleteBoard, each.Id);
-                client.Execute(new RestRequest(deleteBoard, Method.DELETE));
-            }
-            var toBeAdded = new Board().MakeFake();
-            var createUrl = string.Format(Constants.CreateBoard, toBeAdded.Name, toBeAdded.Desc, toBeAdded.Closed);
-            request = new RestRequest(createUrl, Method.POST);
-            request.AddJsonBody(toBeAdded);
+            Client.DeleteBoards(client);
 
-            response = client.Execute(request);
+            var response = Client.CreateBoard(client);
             _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content)); // because i need id
         }
 

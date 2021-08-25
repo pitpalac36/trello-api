@@ -30,5 +30,15 @@ namespace trello.Helpers
 
             return client.Execute(request);
         }
+
+
+        public static IRestResponse GetBoards(IRestClient client)
+        {
+            var request = new RestRequest(Constants.GetBoards, Method.GET);
+
+            return client.Execute(request);
+        }
+
+
     }
 }

@@ -38,8 +38,7 @@ namespace trello.Tests
             _cards.Add(card);
         }
 
-        // TODO: CardClient class
-        //       Tests for Create, Get, Update, Delete Card
+        // TODO: Tests for Update, Delete Card
 
         [TestMethod]
         public void CreateCardTest()
@@ -57,6 +56,20 @@ namespace trello.Tests
             responseCard.IdBoard.Should().Be(card.IdBoard);
             responseCard.IdList.Should().Be(card.IdList);
             responseCard.Should().Be(card);
+        }
+
+        [TestMethod]
+        public void GetCardTest()
+        {
+            var client = new RestClient(Constants.BaseUrl);
+
+            var response = CardClient.GetCard(client, _cards[0].Id);
+            var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            responseCard.IdBoard.Should().Be(_cards[0].IdBoard);
+            responseCard.IdList.Should().Be(_cards[0].IdList);
+            responseCard.Should().Be(_cards[0]);
         }
 
         [ClassCleanup]

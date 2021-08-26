@@ -11,5 +11,6 @@ namespace trello.Helpers
         public static string UpdateBoard = ApiResource.UpdateBoard;
         public static string CreateList = ApiResource.CreateList;
         public static string CreateCard = ApiResource.CreateCard;
+        public static string GetCard = ApiResource.GetCard;
     }
 }

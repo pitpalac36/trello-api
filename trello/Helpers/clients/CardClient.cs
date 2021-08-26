@@ -17,5 +17,12 @@ namespace trello.Helpers.clients
             return client.Execute(request);
         }
 
+        public static IRestResponse GetCard(IRestClient client, string id)
+        {
+            var getUrl = string.Format(Constants.GetCard, id, Key, Token);
+
+            return client.Execute(new RestRequest(getUrl, Method.GET));
+        }
+
     }
 }

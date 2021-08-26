@@ -135,6 +135,9 @@
   <data name="GetBoards" xml:space="preserve">
     <value>/1/members/{0}/boards?key={1}&amp;token={2}</value>
   </data>
+  <data name="GetCard" xml:space="preserve">
+    <value>/1/cards/{0}?key={1}&amp;token={2}</value>
+  </data>
   <data name="Key" xml:space="preserve">
     <value>ccb12ad790633da2de89ccc4e70cd59e</value>
   </data>

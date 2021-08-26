@@ -147,8 +147,11 @@
   <data name="UpdateBoard" xml:space="preserve">
     <value>/1/boards/{0}?key={1}&amp;token={2}&amp;name={3}</value>
   </data>
-  <data name="UpdateCard" xml:space="preserve">
+  <data name="UpdateCardName" xml:space="preserve">
     <value>/1/cards/{0}?key={1}&amp;token={2}&amp;name={3}</value>
+  </data>
+  <data name="UpdateCardStatus" xml:space="preserve">
+    <value>/1/cards/{0}?key={1}&amp;token={2}&amp;closed={3}</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>lauradunca2</value>

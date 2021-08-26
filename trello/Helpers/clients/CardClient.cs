@@ -24,9 +24,18 @@ namespace trello.Helpers.clients
             return client.Execute(new RestRequest(getUrl, Method.GET));
         }
 
-        public static IRestResponse UpdateCard(IRestClient client, Card card)
+        public static IRestResponse UpdateCardName(IRestClient client, Card card)
         {
-            var updateUrl = string.Format(Constants.UpdateCard, card.Id, Key, Token, card.Name);
+            var updateUrl = string.Format(Constants.UpdateCardName, card.Id, Key, Token, card.Name);
+
+            var request = new RestRequest(updateUrl, Method.PUT);
+
+            return client.Execute(request);
+        }
+
+        public static IRestResponse UpdateCardStatus(IRestClient client, Card card)
+        {
+            var updateUrl = string.Format(Constants.UpdateCardStatus, card.Id, Key, Token, card.Closed.ToString().ToLower());
 
             var request = new RestRequest(updateUrl, Method.PUT);
 

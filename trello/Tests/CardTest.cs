@@ -82,11 +82,25 @@ namespace trello.Tests
             var card = _cards[_cards.Count - 1];
             card.Name = Faker.Name.First();
 
-            var response = CardClient.UpdateCard(client, card);
+            var response = CardClient.UpdateCardName(client, card);
             var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
             responseCard.Name.Should().Be(card.Name);
+        }
+
+        [TestMethod]
+        public void UpdateCardStatus()
+        {
+            var client = new RestClient(Constants.BaseUrl);
+            var card = _cards[_cards.Count - 1];
+            card.Closed = !card.Closed;
+
+            var response = CardClient.UpdateCardStatus(client, card);
+            var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            responseCard.Closed.Should().Be(card.Closed);
         }
 
         [ClassCleanup]

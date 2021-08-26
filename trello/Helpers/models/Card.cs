@@ -10,6 +10,7 @@ namespace trello.Helpers.models
 
         public string IdList { get; set; }
         public string IdBoard { get; set; }
+
         public Card MakeFake()
         {
             Name = Faker.Name.FullName();

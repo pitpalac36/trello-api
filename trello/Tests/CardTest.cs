@@ -56,6 +56,9 @@ namespace trello.Tests
             responseCard.IdBoard.Should().Be(card.IdBoard);
             responseCard.IdList.Should().Be(card.IdList);
             responseCard.Should().Be(card);
+
+            card.Id = responseCard.Id;
+            _cards.Add(card);
         }
 
         [TestMethod]
@@ -70,6 +73,20 @@ namespace trello.Tests
             responseCard.IdBoard.Should().Be(_cards[0].IdBoard);
             responseCard.IdList.Should().Be(_cards[0].IdList);
             responseCard.Should().Be(_cards[0]);
+        }
+
+        [TestMethod]
+        public void UpdateCardNameTest()
+        {
+            var client = new RestClient(Constants.BaseUrl);
+            var card = _cards[_cards.Count - 1];
+            card.Name = Faker.Name.First();
+
+            var response = CardClient.UpdateCard(client, card);
+            var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+            responseCard.Name.Should().Be(card.Name);
         }
 
         [ClassCleanup]

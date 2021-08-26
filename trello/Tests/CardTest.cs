@@ -38,8 +38,6 @@ namespace trello.Tests
             _cards.Add(card);
         }
 
-        // TODO: Tests for Update, Delete Card
-
         [TestMethod]
         public void CreateCardTest()
         {

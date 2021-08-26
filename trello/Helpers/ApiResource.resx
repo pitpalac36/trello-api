@@ -138,6 +138,9 @@
   <data name="GetCard" xml:space="preserve">
     <value>/1/cards/{0}?key={1}&amp;token={2}</value>
   </data>
+  <data name="GetLists" xml:space="preserve">
+    <value>/1/boards/{0}/lists?key={1}&amp;token={2}</value>
+  </data>
   <data name="Key" xml:space="preserve">
     <value>ccb12ad790633da2de89ccc4e70cd59e</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="UpdateBoard" xml:space="preserve">
     <value>/1/boards/{0}?key={1}&amp;token={2}&amp;name={3}</value>
+  </data>
+  <data name="UpdateCardList" xml:space="preserve">
+    <value>/1/cards/{0}?key={1}&amp;token={2}&amp;idList={3}</value>
   </data>
   <data name="UpdateCardName" xml:space="preserve">
     <value>/1/cards/{0}?key={1}&amp;token={2}&amp;name={3}</value>

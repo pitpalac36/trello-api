@@ -124,6 +124,15 @@ namespace trello.Helpers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /1/boards/{0}/lists?key={1}&amp;token={2}.
+        /// </summary>
+        internal static string GetLists {
+            get {
+                return ResourceManager.GetString("GetLists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ccb12ad790633da2de89ccc4e70cd59e.
         /// </summary>
         internal static string Key {
@@ -147,6 +156,15 @@ namespace trello.Helpers {
         internal static string UpdateBoard {
             get {
                 return ResourceManager.GetString("UpdateBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /1/cards/{0}?key={1}&amp;token={2}&amp;idList={3}.
+        /// </summary>
+        internal static string UpdateCardList {
+            get {
+                return ResourceManager.GetString("UpdateCardList", resourceCulture);
             }
         }
         

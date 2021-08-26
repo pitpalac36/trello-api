@@ -79,6 +79,15 @@ namespace trello.Helpers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /1/cards?key={0}&amp;token={1}&amp;idList={2}&amp;name={3}&amp;desc={4}.
+        /// </summary>
+        internal static string CreateCard {
+            get {
+                return ResourceManager.GetString("CreateCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /1/boards/{0}/lists?key={1}&amp;token={2}&amp;name={3}.
         /// </summary>
         internal static string CreateList {

@@ -123,6 +123,9 @@
   <data name="CreateBoard" xml:space="preserve">
     <value>/1/boards?name={0}&amp;desc={1}&amp;closed={2}&amp;key={3}&amp;token={4}</value>
   </data>
+  <data name="CreateCard" xml:space="preserve">
+    <value>/1/cards?key={0}&amp;token={1}&amp;idList={2}&amp;name={3}&amp;desc={4}</value>
+  </data>
   <data name="CreateList" xml:space="preserve">
     <value>/1/boards/{0}/lists?key={1}&amp;token={2}&amp;name={3}</value>
   </data>

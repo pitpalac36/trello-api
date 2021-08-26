@@ -13,30 +13,29 @@ namespace trello.Tests
     {
         public static Card _card;
         public static List<BoardList> _lists = new List<BoardList>();
+        public static string _boardId;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
             var client = new RestClient(Constants.BaseUrl);
 
-            BoardClient.DeleteBoards(client);
-
             var response = BoardClient.CreateBoard(client);
-            var boardId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
+            _boardId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
-            response = ListClient.CreateList(client, boardId, Faker.Name.FullName());
+            response = ListClient.CreateList(client, _boardId, Faker.Name.FullName());
             var listId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
             _card = new Card().MakeFake();
             _card.IdList = listId;
-            _card.IdBoard = boardId;
+            _card.IdBoard = _boardId;
 
             response = CardClient.CreateCard(client, _card);
             var cardId = JsonConvert.DeserializeObject<Card>(response.Content).Id;
 
             _card.Id = cardId;
 
-            response = ListClient.GetLists(client, boardId);
+            response = ListClient.GetLists(client, _boardId);
             // lists will contain: default list, todo list, doing list and done list in this order
             _lists.AddRange(JsonConvert.DeserializeObject<BoardList[]>(response.Content));
         }
@@ -51,7 +50,7 @@ namespace trello.Tests
         public static void ClassCleanup()
         {
             var client = new RestClient(Constants.BaseUrl);
-            BoardClient.DeleteBoards(client);
+            BoardClient.DeleteBoard(client, _boardId);
         }
 
     }

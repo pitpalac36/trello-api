@@ -13,23 +13,22 @@ namespace trello.Tests
     public class CardTest
     {
         private volatile static IList<Card> _cards = new List<Card>();
+        private static string _boardId;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
             var client = new RestClient(Constants.BaseUrl);
 
-            BoardClient.DeleteBoards(client);
-
             var response = BoardClient.CreateBoard(client);
-            var boardId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
+            _boardId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
-            response = ListClient.CreateList(client, boardId, Faker.Name.FullName());
+            response = ListClient.CreateList(client, _boardId, Faker.Name.FullName());
             var listId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
             var card = new Card().MakeFake();
             card.IdList = listId;
-            card.IdBoard = boardId;
+            card.IdBoard = _boardId;
 
             response = CardClient.CreateCard(client, card);
             var cardId = JsonConvert.DeserializeObject<Card>(response.Content).Id;
@@ -105,7 +104,7 @@ namespace trello.Tests
         public static void ClassCleanup()
         {
             var client = new RestClient(Constants.BaseUrl);
-            BoardClient.DeleteBoards(client);
+            BoardClient.DeleteBoard(client, _boardId);
         }
     }
 }

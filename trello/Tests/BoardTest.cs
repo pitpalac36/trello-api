@@ -18,7 +18,6 @@ namespace trello
         public static void ClassInitialize(TestContext context)
         {
             var client = new RestClient(Constants.BaseUrl);
-            BoardClient.DeleteBoards(client);
             var response = BoardClient.CreateBoard(client);
             _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content)); // because i need id
         }
@@ -66,8 +65,7 @@ namespace trello
             var response = BoardClient.GetBoards(client);
             var content = JsonConvert.DeserializeObject<Board[]>(response.Content);
 
-            content.Length.Should().Be(_currentBoards.Count);
-            content.Should().BeEquivalentTo(_currentBoards);
+            content.Should().Contain(_currentBoards);
         }
 
         [TestMethod]
@@ -98,7 +96,10 @@ namespace trello
         public static void ClassCleanup()
         {
             var client = new RestClient(Constants.BaseUrl);
-            BoardClient.DeleteBoards(client);
+            foreach (var board in _currentBoards)
+            {
+                BoardClient.DeleteBoard(client, board.Id);
+            }
         }
     }
 }

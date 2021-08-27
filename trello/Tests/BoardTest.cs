@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
+using System.Linq;
 using trello.Helpers;
 using trello.Helpers.clients;
 using trello.Helpers.models;
@@ -65,7 +66,10 @@ namespace trello
             var response = BoardClient.GetBoards(client);
             var content = JsonConvert.DeserializeObject<Board[]>(response.Content);
 
-            content.Should().Contain(_currentBoards);
+            foreach(var each in _currentBoards)
+            {
+                content.Should().Contain(each);
+            }    
         }
 
         [TestMethod]

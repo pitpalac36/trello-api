@@ -138,6 +138,9 @@
   <data name="GetCard" xml:space="preserve">
     <value>/1/cards/{0}?key={1}&amp;token={2}</value>
   </data>
+  <data name="GetList" xml:space="preserve">
+    <value>/1/lists/{0}?key={1}&amp;token={2}</value>
+  </data>
   <data name="GetLists" xml:space="preserve">
     <value>/1/boards/{0}/lists?key={1}&amp;token={2}</value>
   </data>

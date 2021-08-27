@@ -19,6 +19,12 @@ namespace trello.Helpers.clients
             return client.Execute(new RestRequest(getUrl, Method.GET));
         }
 
+        public static IRestResponse GetList(IRestClient client, string listId)
+        {
+            var getUrl = string.Format(Constants.GetList, listId, Key, Token);
+            return client.Execute(new RestRequest(getUrl, Method.GET));
+        }
+
         public static IRestResponse MoveCardToList(IRestClient client, string cardId, string listId)
         {
             var updateUrl = string.Format(Constants.UpdateCardList, cardId, Key, Token, listId);

@@ -124,6 +124,15 @@ namespace trello.Helpers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /1/lists/{0}?key={1}&amp;token={2}.
+        /// </summary>
+        internal static string GetList {
+            get {
+                return ResourceManager.GetString("GetList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /1/boards/{0}/lists?key={1}&amp;token={2}.
         /// </summary>
         internal static string GetLists {

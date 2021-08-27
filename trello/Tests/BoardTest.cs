@@ -11,7 +11,7 @@ using trello.Helpers.models;
 namespace trello
 {
     [TestClass]
-    public class BoardTest
+    public class BoardTest : BaseTest
     {
         public volatile static IList<Board> _currentBoards = new List<Board>();
 

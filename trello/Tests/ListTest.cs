@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using RestSharp;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using trello.Helpers.models;
 namespace trello.Tests
 {
     [TestClass]
-    public class ListTest
+    public class ListTest : BaseTest
     {
         public static Card _card;
         public static List<BoardList> _lists = new List<BoardList>();
@@ -40,10 +41,22 @@ namespace trello.Tests
             _lists.AddRange(JsonConvert.DeserializeObject<BoardList[]>(response.Content));
         }
 
-        [TestMethod]
-        public void MoveCardToTODOList()
+        [DataTestMethod]
+        [DataRow(1, "To Do")]
+        [DataRow(2, "Doing")]
+        [DataRow(3, "Done")]
+        public void MoveCardToList(int listIndex, string listName)
         {
+            var client = new RestClient(Constants.BaseUrl);
 
+            var response = ListClient.MoveCardToList(client, _card.Id, _lists[listIndex].Id);
+            var card = JsonConvert.DeserializeObject<Card>(response.Content);
+
+            response = ListClient.GetList(client, _lists[listIndex].Id);
+            var list = JsonConvert.DeserializeObject<BoardList>(response.Content);
+
+            card.IdList.Should().Be(_lists[listIndex].Id);
+            list.Name.Should().Be(listName);
         }
 
         [ClassCleanup]

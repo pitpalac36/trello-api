@@ -10,7 +10,7 @@ using trello.Helpers.models;
 namespace trello.Tests
 {
     [TestClass]
-    public class CardTest
+    public class CardTest : BaseTest
     {
         private volatile static IList<Card> _cards = new List<Card>();
         private static string _boardId;

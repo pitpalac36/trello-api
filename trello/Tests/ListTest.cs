@@ -19,24 +19,22 @@ namespace trello.Tests
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            var client = new RestClient(Constants.BaseUrl);
-
-            var response = BoardClient.CreateBoard(client);
+            var response = BoardClient.CreateBoard(_client);
             _boardId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
-            response = ListClient.CreateList(client, _boardId, Faker.Name.FullName());
+            response = ListClient.CreateList(_client, _boardId, Faker.Name.FullName());
             var listId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
             _card = new Card().MakeFake();
             _card.IdList = listId;
             _card.IdBoard = _boardId;
 
-            response = CardClient.CreateCard(client, _card);
+            response = CardClient.CreateCard(_client, _card);
             var cardId = JsonConvert.DeserializeObject<Card>(response.Content).Id;
 
             _card.Id = cardId;
 
-            response = ListClient.GetLists(client, _boardId);
+            response = ListClient.GetLists(_client, _boardId);
             // lists will contain: default list, todo list, doing list and done list in this order
             _lists.AddRange(JsonConvert.DeserializeObject<BoardList[]>(response.Content));
         }
@@ -47,12 +45,10 @@ namespace trello.Tests
         [DataRow(3, "Done")]
         public void MoveCardToList(int listIndex, string listName)
         {
-            var client = new RestClient(Constants.BaseUrl);
-
-            var response = ListClient.MoveCardToList(client, _card.Id, _lists[listIndex].Id);
+            var response = ListClient.MoveCardToList(_client, _card.Id, _lists[listIndex].Id);
             var card = JsonConvert.DeserializeObject<Card>(response.Content);
 
-            response = ListClient.GetList(client, _lists[listIndex].Id);
+            response = ListClient.GetList(_client, _lists[listIndex].Id);
             var list = JsonConvert.DeserializeObject<BoardList>(response.Content);
 
             card.IdList.Should().Be(_lists[listIndex].Id);
@@ -62,8 +58,7 @@ namespace trello.Tests
         [ClassCleanup]
         public static void ClassCleanup()
         {
-            var client = new RestClient(Constants.BaseUrl);
-            BoardClient.DeleteBoard(client, _boardId);
+            BoardClient.DeleteBoard(_client, _boardId);
         }
 
     }

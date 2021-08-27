@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using RestSharp;
 using System.Collections.Generic;
 using trello.Helpers;
 using trello.Helpers.clients;
@@ -14,23 +13,22 @@ namespace trello.Tests
     {
         private volatile static IList<Card> _cards = new List<Card>();
         private static string _boardId;
+        
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            var client = new RestClient(Constants.BaseUrl);
-
-            var response = BoardClient.CreateBoard(client);
+            var response = BoardClient.CreateBoard(_client);
             _boardId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
-            response = ListClient.CreateList(client, _boardId, Faker.Name.FullName());
+            response = ListClient.CreateList(_client, _boardId, Faker.Name.FullName());
             var listId = JsonConvert.DeserializeObject<Board>(response.Content).Id;
 
             var card = new Card().MakeFake();
             card.IdList = listId;
             card.IdBoard = _boardId;
 
-            response = CardClient.CreateCard(client, card);
+            response = CardClient.CreateCard(_client, card);
             var cardId = JsonConvert.DeserializeObject<Card>(response.Content).Id;
 
             card.Id = cardId;
@@ -40,13 +38,11 @@ namespace trello.Tests
         [TestMethod]
         public void CreateCardTest()
         {
-            var client = new RestClient(Constants.BaseUrl);
-
             var card = new Card().MakeFake();
             card.IdList = _cards[0].IdList;
             card.IdBoard = _cards[0].IdBoard;
 
-            var response = CardClient.CreateCard(client, card);
+            var response = CardClient.CreateCard(_client, card);
             var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
@@ -61,9 +57,7 @@ namespace trello.Tests
         [TestMethod]
         public void GetCardTest()
         {
-            var client = new RestClient(Constants.BaseUrl);
-
-            var response = CardClient.GetCard(client, _cards[0].Id);
+            var response = CardClient.GetCard(_client, _cards[0].Id);
             var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
@@ -75,11 +69,10 @@ namespace trello.Tests
         [TestMethod]
         public void UpdateCardNameTest()
         {
-            var client = new RestClient(Constants.BaseUrl);
             var card = _cards[_cards.Count - 1];
             card.Name = Faker.Name.First();
 
-            var response = CardClient.UpdateCardName(client, card);
+            var response = CardClient.UpdateCardName(_client, card);
             var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
@@ -89,11 +82,10 @@ namespace trello.Tests
         [TestMethod]
         public void UpdateCardStatus()
         {
-            var client = new RestClient(Constants.BaseUrl);
             var card = _cards[_cards.Count - 1];
             card.Closed = !card.Closed;
 
-            var response = CardClient.UpdateCardStatus(client, card);
+            var response = CardClient.UpdateCardStatus(_client, card);
             var responseCard = JsonConvert.DeserializeObject<Card>(response.Content);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
@@ -103,8 +95,7 @@ namespace trello.Tests
         [ClassCleanup]
         public static void ClassCleanup()
         {
-            var client = new RestClient(Constants.BaseUrl);
-            BoardClient.DeleteBoard(client, _boardId);
+            BoardClient.DeleteBoard(_client, _boardId);
         }
     }
 }

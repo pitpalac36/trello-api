@@ -1,9 +1,7 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using RestSharp;
 using System.Collections.Generic;
-using System.Linq;
 using trello.Helpers;
 using trello.Helpers.clients;
 using trello.Helpers.models;
@@ -18,8 +16,7 @@ namespace trello
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            var client = new RestClient(Constants.BaseUrl);
-            var response = BoardClient.CreateBoard(client);
+            var response = BoardClient.CreateBoard(_client);
             _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content)); // because i need id
         }
 
@@ -35,8 +32,7 @@ namespace trello
         [DynamicData(nameof(Boards), DynamicDataSourceType.Property)]
         public void CreateBoardTest(Board board, System.Net.HttpStatusCode status)
         {
-            var client = new RestClient(Constants.BaseUrl);
-            var response = BoardClient.CreateBoard(client, board);
+            var response = BoardClient.CreateBoard(_client, board);
             var content = JsonConvert.DeserializeObject<Board>(response.Content);
 
             response.StatusCode.Should().Be(status);
@@ -48,10 +44,9 @@ namespace trello
         [TestMethod]
         public void CreateListOnBoardTest()
         {
-            var client = new RestClient(Constants.BaseUrl);
             var name = Faker.Name.FullName();
 
-            var response = ListClient.CreateList(client, _currentBoards[0].Id, name);
+            var response = ListClient.CreateList(_client, _currentBoards[0].Id, name);
             var content = JsonConvert.DeserializeObject<BoardList>(response.Content);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
@@ -62,8 +57,7 @@ namespace trello
         [TestMethod]
         public void GetBoardsTest()
         {
-            var client = new RestClient(Constants.BaseUrl);
-            var response = BoardClient.GetBoards(client);
+            var response = BoardClient.GetBoards(_client);
             var content = JsonConvert.DeserializeObject<Board[]>(response.Content);
 
             foreach(var each in _currentBoards)
@@ -75,9 +69,8 @@ namespace trello
         [TestMethod]
         public void UpdateBoardTest()
         {
-            var client = new RestClient(Constants.BaseUrl);
             var dto = new UpdateBoard { Id = _currentBoards[0].Id, Name = Faker.Name.FullName() };
-            var response = BoardClient.UpdateBoard(client, dto);
+            var response = BoardClient.UpdateBoard(_client, dto);
             var content = JsonConvert.DeserializeObject<Board>(response.Content);
 
             content.Name.Should().Be(dto.Name);
@@ -88,8 +81,7 @@ namespace trello
         [TestMethod]
         public void DeleteBoardByIdTest()
         {
-            var client = new RestClient(Constants.BaseUrl);
-            var response = BoardClient.DeleteBoard(client, _currentBoards[0].Id);
+            var response = BoardClient.DeleteBoard(_client, _currentBoards[0].Id);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
 
@@ -99,10 +91,9 @@ namespace trello
         [ClassCleanup]
         public static void ClassCleanup()
         {
-            var client = new RestClient(Constants.BaseUrl);
             foreach (var board in _currentBoards)
             {
-                BoardClient.DeleteBoard(client, board.Id);
+                BoardClient.DeleteBoard(_client, board.Id);
             }
         }
     }

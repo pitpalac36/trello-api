@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace trello.Helpers
 {
     public class Constants
@@ -17,5 +19,8 @@ namespace trello.Helpers
         public static string GetLists = ApiResource.GetLists;
         public static string UpdateCardList = ApiResource.UpdateCardList;
         public static string GetList = ApiResource.GetList;
+        public static string LoginUrl = ApiResource.LoginUrl;
+
+        public static Tuple<string, string> credentials = new Tuple<string, string>(ApiResource.Email, ApiResource.Password);
     }
 }

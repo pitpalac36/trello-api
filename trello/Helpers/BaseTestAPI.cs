@@ -4,7 +4,7 @@ using RestSharp;
 [assembly: Parallelize(Workers = 8, Scope = ExecutionScope.ClassLevel)]
 namespace trello.Helpers
 {
-    public class BaseTest
+    public class BaseTestAPI
     {
         protected static IRestClient _client = new RestClient(Constants.BaseUrl);
     }

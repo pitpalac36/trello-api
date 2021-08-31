@@ -9,7 +9,7 @@ using trello.Helpers.models;
 namespace trello
 {
     [TestClass]
-    public class BoardTest : BaseTest
+    public class BoardTest : BaseTestAPI
     {
         public volatile static IList<Board> _currentBoards = new List<Board>();
 
@@ -86,6 +86,8 @@ namespace trello
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
 
             _currentBoards.Remove(_currentBoards[0]);
+
+            Assert.IsTrue(true);
         }
 
         [ClassCleanup]

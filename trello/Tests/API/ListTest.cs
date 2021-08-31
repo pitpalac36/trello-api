@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using RestSharp;
 using System.Collections.Generic;
 using trello.Helpers;
 using trello.Helpers.clients;
@@ -10,7 +9,7 @@ using trello.Helpers.models;
 namespace trello.Tests
 {
     [TestClass]
-    public class ListTest : BaseTest
+    public class ListTest : BaseTestAPI
     {
         public static Card _card;
         public static List<BoardList> _lists = new List<BoardList>();

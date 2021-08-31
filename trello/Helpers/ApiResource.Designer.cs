@@ -106,6 +106,15 @@ namespace trello.Helpers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to dummy_email@outlook.com.
+        /// </summary>
+        internal static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /1/members/{0}/boards?key={1}&amp;token={2}.
         /// </summary>
         internal static string GetBoards {
@@ -147,6 +156,24 @@ namespace trello.Helpers {
         internal static string Key {
             get {
                 return ResourceManager.GetString("Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://trello.com/login.
+        /// </summary>
+        internal static string LoginUrl {
+            get {
+                return ResourceManager.GetString("LoginUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dummypass.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         

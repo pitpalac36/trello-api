@@ -39,12 +39,13 @@ namespace trello.Tests.UI
         [TestMethod]
         public void CreateListOnBoardTest()
         {
-            var title = Faker.Lorem.Sentence();
+            var word = Faker.Lorem.GetFirstWord();
 
             MyPages.LoginPage.Login(Constants.credentials.Item1, Constants.credentials.Item2);
-            MyPages.HomePage.NavigateToBoard();
-            MyPages.BoardPage.AddListToBoard(title);
+            MyPages.HomePage.NavigateToBoard(_currentBoards.First(x => x.Name.Equals(_currentBoards[0].Name)));
+            MyPages.BoardPage.AddListToBoard(word);
 
+            MyPages.BoardPage.GetTitleOfLastList().Should().Be(word);
         }
 
 

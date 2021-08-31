@@ -11,6 +11,7 @@ namespace trello.Pages
         private readonly By _addListPane = By.CssSelector(".open-add-list");
         private readonly By _listNameInput = By.CssSelector(".list-name-input");
         private readonly By _addListButton = By.CssSelector(".mod-list-add-button");
+        private readonly By _listsPanes = By.CssSelector("div.list.js-list-content h2");
         #endregion
 
         public string GetBoardNameFromPane()
@@ -27,6 +28,12 @@ namespace trello.Pages
             WaitHelpers.WaitUntilElementIsVisible(_listNameInput);
             _listNameInput.ActionSendKeys(title);
             _addListButton.ActionClick();
+        }
+
+        public string GetTitleOfLastList()
+        {
+            var lists = _listsPanes.GetElements();
+            return lists[lists.Count - 1].Text;
         }
     }
 }

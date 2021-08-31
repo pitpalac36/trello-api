@@ -106,7 +106,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dummy_email@outlook.com.
+        ///   Looks up a localized string similar to laura_dunca@outlook.com.
         /// </summary>
         internal static string Email {
             get {
@@ -169,7 +169,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to dummypass.
+        ///   Looks up a localized string similar to enFRYsHLGSkGmQ7.
         /// </summary>
         internal static string Password {
             get {

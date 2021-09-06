@@ -12,7 +12,7 @@ namespace trello.Tests.UI
     [TestClass]
     public class BoardTestUI : BaseTestUI
     {
-        public volatile static IList<Board> _currentBoards = new List<Board>();
+        public static volatile IList<Board> _currentBoards = new List<Board>();
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

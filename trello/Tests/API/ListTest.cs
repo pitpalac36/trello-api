@@ -12,7 +12,7 @@ namespace trello.Tests
     public class ListTest : BaseTestAPI
     {
         public static Card _card;
-        public static List<BoardList> _lists = new List<BoardList>();
+        public static volatile List<BoardList> _lists = new List<BoardList>();
         public static string _boardId;
 
         [ClassInitialize]

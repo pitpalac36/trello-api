@@ -11,7 +11,7 @@ namespace trello.Tests
     [TestClass]
     public class CardTest : BaseTestAPI
     {
-        private volatile static IList<Card> _cards = new List<Card>();
+        private static volatile IList<Card> _cards = new List<Card>();
         private static string _boardId;
         
 

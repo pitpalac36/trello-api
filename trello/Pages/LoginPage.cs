@@ -16,9 +16,9 @@ namespace trello.Pages
         public void Login(string username, string password)
         {
             _emailField.ActionSendKeys(username);
-            WaitHelpers.WaitUntilElementIsVisible(_atlasianLoginButton);
+            _atlasianLoginButton.WaitUntilElementIsVisible();
             _atlasianLoginButton.ActionClick();
-            WaitHelpers.WaitForElementToBeClickable(_finalLoginButton);
+            _finalLoginButton.WaitForElementToBeClickable();
             _passwordField.ActionSendKeys(password);
             _finalLoginButton.ActionClick();
         }

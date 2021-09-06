@@ -17,11 +17,11 @@ namespace trello.Pages
 
         public void CreateBoard(string name)
         {
-            WaitHelpers.WaitUntilElementIsVisible(_createMenuButton);
+            _createMenuButton.WaitUntilElementIsVisible();
             _createMenuButton.ActionClick();
-            WaitHelpers.WaitForElementToBeClickable(_createBoardOption);
+            _createBoardOption.WaitForElementToBeClickable();
             _createBoardOption.ActionClick();
-            WaitHelpers.WaitUntilElementIsVisible(_boardTitleField);
+            _boardTitleField.WaitUntilElementIsVisible();
             _boardTitleField.ActionSendKeys(name);
             _createBoardButton.ActionClick();
             WaitHelpers.WaitForDocumentReadyState();
@@ -29,7 +29,7 @@ namespace trello.Pages
 
         public void NavigateToBoard(Board board)
         {
-            WaitHelpers.WaitUntilElementIsVisible(_firstBoardFromWorkspacePane);
+            _firstBoardFromWorkspacePane.WaitUntilElementIsVisible();
             var boards = _firstBoardFromWorkspacePane.GetElements();
             foreach (var each in boards)
             {

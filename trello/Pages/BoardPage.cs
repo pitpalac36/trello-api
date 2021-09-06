@@ -21,16 +21,16 @@ namespace trello.Pages
 
         public string GetBoardNameFromPane()
         {
-            WaitHelpers.WaitUntilElementIsVisible(_boardNamePane);
+            _boardNamePane.WaitUntilElementIsVisible();
             var name = _boardNamePane.GetText();
             return name;
         }
 
         public void AddListToBoard(string title)
         {
-            WaitHelpers.WaitUntilElementIsVisible(_addListPane);
+            _addListPane.WaitUntilElementIsVisible();
             _addListPane.ActionClick();
-            WaitHelpers.WaitUntilElementIsVisible(_listNameInput);
+            _listNameInput.WaitUntilElementIsVisible();
             _listNameInput.ActionSendKeys(title);
             _addListButton.ActionClick();
         }

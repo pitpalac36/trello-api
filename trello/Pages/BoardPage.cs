@@ -12,6 +12,11 @@ namespace trello.Pages
         private readonly By _listNameInput = By.CssSelector(".list-name-input");
         private readonly By _addListButton = By.CssSelector(".mod-list-add-button");
         private readonly By _listsPanes = By.CssSelector("h2+textarea:last-of-type");
+        private readonly By _menuButton = By.CssSelector(".board-header-btn.mod-show-menu");
+        private readonly By _aboutBoardButton = By.CssSelector(".board-menu-navigation-item-link.js-about-this-board");
+        private readonly By _boardDescArea = By.CssSelector("textarea.board-description");
+        private readonly By _confirmSaveBoardButton = By.CssSelector("input.confirm");
+        private readonly By _boardDescLabel = By.CssSelector(".js-desc");
         #endregion
 
         public string GetBoardNameFromPane()
@@ -35,6 +40,24 @@ namespace trello.Pages
             var lists = _listsPanes.GetElements();
             var title = lists[lists.Count - 1].Text;
             return title;
+        }
+
+        public void OpenMenu()
+        {
+            _menuButton.ActionClick();
+        }
+
+        public void AddDescription(string desc)
+        {
+            _aboutBoardButton.ActionClick();
+            _boardDescArea.ActionClick();
+            _boardDescArea.ActionSendKeys(desc);
+            _confirmSaveBoardButton.ActionClick();
+        }
+
+        public string GetDescription()
+        {
+            return _boardDescLabel.GetText();
         }
     }
 }

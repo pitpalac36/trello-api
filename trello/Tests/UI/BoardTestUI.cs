@@ -17,8 +17,8 @@ namespace trello.Tests.UI
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            var response = BoardClient.CreateBoard(_client);
-            _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content)); // because i need id
+            var response = BoardClient.CreateSimpleBoard(_client);
+            _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content));
         }
 
         [TestMethod]
@@ -46,6 +46,19 @@ namespace trello.Tests.UI
             MyPages.BoardPage.AddListToBoard(word);
 
             MyPages.BoardPage.GetTitleOfLastList().Should().Be(word);
+        }
+
+        [TestMethod]
+        public void AddDescriptionToBoardTest()
+        {
+            var desc = Faker.Lorem.Paragraph();
+
+            MyPages.LoginPage.Login(Constants.credentials.Item1, Constants.credentials.Item2);
+            MyPages.HomePage.NavigateToBoard(_currentBoards.First(x => x.Name.Equals(_currentBoards[0].Name)));
+            MyPages.BoardPage.OpenMenu();
+            MyPages.BoardPage.AddDescription(desc);
+
+            MyPages.BoardPage.GetDescription().Should().Be(desc);
         }
 
 

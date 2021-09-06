@@ -97,6 +97,15 @@ namespace trello.Helpers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /1/boards?name={0}&amp;key={1}&amp;token={2}.
+        /// </summary>
+        internal static string CreateSimpleBoard {
+            get {
+                return ResourceManager.GetString("CreateSimpleBoard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to /1/boards/{0}?key={1}&amp;token={2}.
         /// </summary>
         internal static string DeleteBoard {
@@ -169,7 +178,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to enFRYsHLGSkGmQ7.
+        ///   Looks up a localized string similar to dummy.
         /// </summary>
         internal static string Password {
             get {
@@ -223,7 +232,7 @@ namespace trello.Helpers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to lauradunca2.
+        ///   Looks up a localized string similar to dummy.
         /// </summary>
         internal static string Username {
             get {

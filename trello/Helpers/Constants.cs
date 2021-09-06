@@ -20,6 +20,7 @@ namespace trello.Helpers
         public static string UpdateCardList = ApiResource.UpdateCardList;
         public static string GetList = ApiResource.GetList;
         public static string LoginUrl = ApiResource.LoginUrl;
+        public static string CreateSimpleBoard = ApiResource.CreateSimpleBoard;
 
         public static Tuple<string, string> credentials = new Tuple<string, string>(ApiResource.Email, ApiResource.Password);
     }

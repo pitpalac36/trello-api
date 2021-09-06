@@ -38,6 +38,17 @@ namespace trello.Helpers
             return client.Execute(request);
         }
 
+        public static IRestResponse CreateSimpleBoard(IRestClient client)
+        {
+            var toBeAdded = new Board().MakeFake();
+            var createUrl = string.Format(Constants.CreateSimpleBoard, toBeAdded.Name, Key, Token);
+
+            var request = new RestRequest(createUrl, Method.POST);
+            request.AddJsonBody(toBeAdded);
+
+            return client.Execute(request);
+        }
+
         public static IRestResponse CreateBoard(IRestClient client, Board board)
         {
             var createUrl = string.Format(Constants.CreateBoard, board.Name, board.Desc, board.Closed, Key, Token);

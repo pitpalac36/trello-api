@@ -129,11 +129,14 @@
   <data name="CreateList" xml:space="preserve">
     <value>/1/boards/{0}/lists?key={1}&amp;token={2}&amp;name={3}</value>
   </data>
+  <data name="CreateSimpleBoard" xml:space="preserve">
+    <value>/1/boards?name={0}&amp;key={1}&amp;token={2}</value>
+  </data>
   <data name="DeleteBoard" xml:space="preserve">
     <value>/1/boards/{0}?key={1}&amp;token={2}</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>dummy_email@outlook.com</value>
+    <value>laura_dunca@outlook.com</value>
   </data>
   <data name="GetBoards" xml:space="preserve">
     <value>/1/members/{0}/boards?key={1}&amp;token={2}</value>
@@ -154,7 +157,7 @@
     <value>https://trello.com/login</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>dummypass</value>
+    <value>dummy</value>
   </data>
   <data name="Token" xml:space="preserve">
     <value>dcd06124ded1c0d963e61ba71442f8965243bb98e9afdc72eca4833e3b403fbb</value>
@@ -172,6 +175,6 @@
     <value>/1/cards/{0}?key={1}&amp;token={2}&amp;closed={3}</value>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>lauradunca2</value>
+    <value>dummy</value>
   </data>
 </root>

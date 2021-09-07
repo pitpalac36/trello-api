@@ -14,9 +14,14 @@ namespace trello.Pages
         private readonly By _listsPanes = By.CssSelector("h2+textarea:last-of-type");
         private readonly By _menuButton = By.CssSelector(".board-header-btn.mod-show-menu");
         private readonly By _aboutBoardButton = By.CssSelector(".board-menu-navigation-item-link.js-about-this-board");
-        private readonly By _boardDescArea = By.CssSelector("textarea.board-description");
+        private readonly By _boardDescArea = By.CssSelector(".description-fake-text-area");
+        private readonly By _boardDescTextArea = By.CssSelector("textarea.field");
         private readonly By _confirmSaveBoardButton = By.CssSelector("input.confirm");
         private readonly By _boardDescLabel = By.CssSelector(".js-desc");
+        private readonly By _addCardButton = By.CssSelector(".js-add-a-card");
+        private readonly By _cardTitleField = By.CssSelector(".list-card-composer-textarea");
+        private readonly By _addCardSubmitButton = By.CssSelector(".confirm.js-add-card");
+        private readonly By _firstCardPane = By.CssSelector(".js-list-card");
         #endregion
 
         public string GetBoardNameFromPane()
@@ -50,8 +55,9 @@ namespace trello.Pages
         public void AddDescription(string desc)
         {
             _aboutBoardButton.ActionClick();
+            _boardDescArea.WaitForElementToBeClickable();
             _boardDescArea.ActionClick();
-            _boardDescArea.ActionSendKeys(desc);
+            _boardDescTextArea.ActionSendKeys(desc);
             _confirmSaveBoardButton.ActionClick();
         }
 
@@ -59,5 +65,14 @@ namespace trello.Pages
         {
             return _boardDescLabel.GetText();
         }
+
+        public void AddCard(string name)
+        {
+            _addCardButton.ActionClick();
+            _cardTitleField.ActionSendKeys(name);
+            _addCardSubmitButton.ActionClick();
+        }
+
+
     }
 }

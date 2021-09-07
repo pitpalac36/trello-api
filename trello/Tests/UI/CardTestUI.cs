@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using trello.Helpers;
-using trello.Helpers.clients;
 using trello.Helpers.models;
 using MyPages = trello.UI.Pages;
 
@@ -22,8 +22,9 @@ namespace trello.Tests.UI
             _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content));
         }
 
-        [TestMethod]
-        public void AddCardWithChecklistTest()
+        [DataTestMethod]
+        [DataRow(3, "1", "2", "3")]
+        public void AddCardWithChecklistTest(int checklistSize, params string[] items)
         {
             MyPages.LoginPage.Login(Constants.credentials.Item1, Constants.credentials.Item2);
             MyPages.HomePage.NavigateToBoard(_currentBoards.First(x => x.Name.Equals(_currentBoards[0].Name)));
@@ -32,7 +33,10 @@ namespace trello.Tests.UI
             MyPages.BoardPage.AddCard(name);
 
             MyPages.BoardPage.AddChecklist();
-            MyPages.BoardPage.AddItemsChecklistMenu();
+            MyPages.BoardPage.AddItemsChecklistMenu(items);
+
+            MyPages.BoardPage.IsChecklistBadgePresent().Should().BeTrue();
+            MyPages.BoardPage.GetChecklistBadgeText().Should().Be(string.Format("0/{0}", items.Count()));
         }
 
         [ClassCleanup]

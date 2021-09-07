@@ -25,10 +25,11 @@ namespace trello.Pages
         private readonly By _checklistMenu = By.CssSelector(".js-add-checklist-menu");
         private readonly By _checklistNameField = By.CssSelector("input#id-checklist");
         private readonly By _addChecklistButton = By.CssSelector(".js-add-checklist");
-        private readonly By _addItemInChecklistButton = By.CssSelector(".js-new-checklist-item-button");
         private readonly By _checklistNewItemField = By.CssSelector("textarea.checklist-new-item-text");
         private readonly By _confirmNewChecklistItemButton = By.CssSelector(".confirm.js-add-checklist-item");
         private readonly By _dialogCloseButton = By.CssSelector(".dialog-close-button");
+        private readonly By _checklistIcon = By.CssSelector(".icon-checklist");
+        private readonly By _checkItemsBadgeText = By.CssSelector(".js-checkitems-badge-text");
         #endregion
 
         public string GetBoardNameFromPane()
@@ -90,12 +91,25 @@ namespace trello.Pages
             _addChecklistButton.ActionClick();
         }
 
-        public void AddItemsChecklistMenu()
+        public void AddItemsChecklistMenu(string[] items)
         {
-           // _addItemInChecklistButton.ActionClick();
-            _checklistNewItemField.ActionSendKeys("1");
-            _confirmNewChecklistItemButton.ActionClick();
+            foreach (var each in items)
+            {
+                _checklistNewItemField.ActionSendKeys(each);
+                _confirmNewChecklistItemButton.ActionClick();
+            }
             _dialogCloseButton.ActionClick();
+            WaitHelpers.WaitForDocumentReadyState();
+        }
+
+        public bool IsChecklistBadgePresent()
+        {
+            return _checklistIcon.IsElementPresent();
+        }
+
+        public string GetChecklistBadgeText()
+        {
+            return _checkItemsBadgeText.GetText();
         }
     }
 }

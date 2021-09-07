@@ -32,11 +32,27 @@ namespace trello.Tests.UI
             var name = Faker.Name.First();
             MyPages.BoardPage.AddCard(name);
 
+            MyPages.BoardPage.ClickOnCard();
             MyPages.BoardPage.AddChecklist();
             MyPages.BoardPage.AddItemsChecklistMenu(items);
+            MyPages.BoardPage.CloseDialog();
 
             MyPages.BoardPage.IsChecklistBadgePresent().Should().BeTrue();
             MyPages.BoardPage.GetChecklistBadgeText().Should().Be(string.Format("0/{0}", items.Count()));
+        }
+
+        [DataTestMethod]
+        [DataRow(0, 2)]
+        [DataRow(1, 1)]
+        [DataRow(2, 0)]
+        public void CheckItemTest(int indexInChecklist, int remaining)
+        {
+            MyPages.LoginPage.Login(Constants.credentials.Item1, Constants.credentials.Item2);
+            MyPages.HomePage.NavigateToBoard(_currentBoards.First(x => x.Name.Equals(_currentBoards[0].Name)));
+
+            MyPages.BoardPage.ClickOnCard();
+            MyPages.BoardPage.CheckItem(indexInChecklist);
+            MyPages.BoardPage.CloseDialog();
         }
 
         [ClassCleanup]

@@ -21,7 +21,10 @@ namespace trello.Pages
         private readonly By _addCardButton = By.CssSelector(".js-add-a-card");
         private readonly By _cardTitleField = By.CssSelector(".list-card-composer-textarea");
         private readonly By _addCardSubmitButton = By.CssSelector(".confirm.js-add-card");
-        private readonly By _firstCardPane = By.CssSelector(".js-list-card");
+        private readonly By _firstCardPane = By.CssSelector(".list-card.js-member-droppable.ui-droppable");
+        private readonly By _checklistMenu = By.CssSelector(".js-add-checklist-menu");
+        private readonly By _checklistNameField = By.CssSelector("input#id-checklist");
+        private readonly By _addChecklistButton = By.CssSelector(".js-add-checklist");
         #endregion
 
         public string GetBoardNameFromPane()
@@ -73,6 +76,19 @@ namespace trello.Pages
             _addCardSubmitButton.ActionClick();
         }
 
+        public void AddChecklist()
+        {
+            _firstCardPane.ActionClick();
+            _checklistMenu.WaitForElementToBeClickable();
+            _checklistMenu.ActionClick();
+            _checklistNameField.ClearField();
+            _checklistNameField.ActionSendKeys("aaaa");
+            _addChecklistButton.ActionClick();
+        }
 
+        public void AddItemsChecklistMenu()
+        {
+
+        }
     }
 }

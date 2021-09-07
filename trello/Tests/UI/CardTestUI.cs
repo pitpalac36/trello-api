@@ -39,7 +39,8 @@ namespace trello.Tests.UI
             var name = Faker.Name.First();
             MyPages.BoardPage.AddCard(name);
 
-
+            MyPages.BoardPage.AddChecklist();
+            MyPages.BoardPage.AddItemsChecklistMenu();
         }
 
         [ClassCleanup]

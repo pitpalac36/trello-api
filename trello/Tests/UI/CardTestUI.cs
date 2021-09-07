@@ -39,20 +39,15 @@ namespace trello.Tests.UI
 
             MyPages.BoardPage.IsChecklistBadgePresent().Should().BeTrue();
             MyPages.BoardPage.GetChecklistBadgeText().Should().Be(string.Format("0/{0}", items.Count()));
-        }
 
-        [DataTestMethod]
-        [DataRow(0, 2)]
-        [DataRow(1, 1)]
-        [DataRow(2, 0)]
-        public void CheckItemTest(int indexInChecklist, int remaining)
-        {
-            MyPages.LoginPage.Login(Constants.credentials.Item1, Constants.credentials.Item2);
-            MyPages.HomePage.NavigateToBoard(_currentBoards.First(x => x.Name.Equals(_currentBoards[0].Name)));
+            for (var i = 1; i <= items.Count(); i++)
+            {
+                MyPages.BoardPage.ClickOnCard();
+                MyPages.BoardPage.CheckItem(i);
+                MyPages.BoardPage.CloseDialog();
 
-            MyPages.BoardPage.ClickOnCard();
-            MyPages.BoardPage.CheckItem(indexInChecklist);
-            MyPages.BoardPage.CloseDialog();
+                // assert badge shows sth like "(items.Count() - i)/3"
+            }
         }
 
         [ClassCleanup]

@@ -20,14 +20,6 @@ namespace trello.Tests.UI
         {
             var response = BoardClient.CreateBoard(_client);
             _currentBoards.Add(JsonConvert.DeserializeObject<Board>(response.Content));
-
-            response = ListClient.CreateList(_client, _currentBoards[0].Id, Faker.Name.FullName());
-            var list = JsonConvert.DeserializeObject<BoardList>(response.Content);
-
-            card = new Card();
-            card.IdList = list.Id;
-            response = CardClient.CreateCard(_client, card);
-            card = JsonConvert.DeserializeObject<Card>(response.Content);
         }
 
         [TestMethod]

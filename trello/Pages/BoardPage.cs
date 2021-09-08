@@ -82,12 +82,12 @@ namespace trello.Pages
             _addCardSubmitButton.ActionClick();
         }
 
-        public void AddChecklist()
+        public void AddChecklist(string name)
         {
             _checklistMenu.WaitForElementToBeClickable();
             _checklistMenu.ActionClick();
             _checklistNameField.ClearField();
-            _checklistNameField.ActionSendKeys("aaaa");
+            _checklistNameField.ActionSendKeys(name);
             _addChecklistButton.ActionClick();
         }
 
@@ -125,6 +125,11 @@ namespace trello.Pages
         {
             var itemCheckbox = By.CssSelector(string.Format(_genericItemCheckbox, indexInChecklist));
             itemCheckbox.ActionClick();
+        }
+
+        public void Wait()
+        {
+            WaitHelpers.ExplicitWait(1000);
         }
     }
 }

@@ -29,11 +29,12 @@ namespace trello.Tests.UI
             MyPages.LoginPage.Login(Constants.credentials.Item1, Constants.credentials.Item2);
             MyPages.HomePage.NavigateToBoard(_currentBoards.First(x => x.Name.Equals(_currentBoards[0].Name)));
 
-            var name = Faker.Name.First();
-            MyPages.BoardPage.AddCard(name);
+            var cardName = Faker.Name.First();
+            var checklistName = Faker.Name.First();
+            MyPages.BoardPage.AddCard(cardName);
 
             MyPages.BoardPage.ClickOnCard();
-            MyPages.BoardPage.AddChecklist();
+            MyPages.BoardPage.AddChecklist(checklistName);
             MyPages.BoardPage.AddItemsChecklistMenu(items);
             MyPages.BoardPage.CloseDialog();
 
@@ -45,8 +46,9 @@ namespace trello.Tests.UI
                 MyPages.BoardPage.ClickOnCard();
                 MyPages.BoardPage.CheckItem(i);
                 MyPages.BoardPage.CloseDialog();
+                MyPages.BoardPage.Wait();
 
-                // assert badge shows sth like "(items.Count() - i)/3"
+                MyPages.BoardPage.GetChecklistBadgeText().Should().Be(string.Format("{0}/{1}", i, items.Count()));
             }
         }
 
